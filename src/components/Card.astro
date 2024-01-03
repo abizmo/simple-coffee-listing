@@ -1,0 +1,86 @@
+<article class="card">
+  <header class="card__header">
+    <img
+      class="card__image"
+      src="https://csyxkpbavpcrhwqhcpyy.supabase.co/storage/v1/object/public/assets/coffee-challenge/cappuccino.jpg"
+      alt="capuccino"
+    />
+    <span class="card__popular">Popular</span>
+  </header>
+  <main class="card__body">
+    <h3 class="card__name">Capuccino</h3>
+    <span class="card__price">$5.20</span>
+  </main>
+  <footer class="card__footer">
+    <div class="card__rating">
+      <img src="./images/Star_fill.svg" alt="star-fill" />
+      <span class="card__mark">
+        4.7 <span class="card__votes">(65 votes)</span>
+      </span>
+    </div>
+    <span class="card__sold-out">Sold out</span>
+  </footer>
+</article>
+
+<style>
+  .card {
+    width: 260px;
+  }
+
+  .card__header {
+    position: relative;
+    margin-bottom: 1em;
+  }
+
+  .card__image {
+    border-radius: 1em;
+  }
+
+  .card__popular {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    padding: 0.3em 1em;
+    border-radius: 99em;
+    background-color: var(--clr-yellow);
+    color: var(--clr-neutral-800);
+    font-size: var(--fs-100);
+  }
+
+  .card__body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5em;
+  }
+
+  .card__name {
+    margin-bottom: 0;
+    font-size: var(--fs-400);
+  }
+  .card__price {
+    padding: 0.25em 0.5em;
+    border-radius: 0.5em;
+    background-color: var(--clr-green);
+    color: var(--clr-neutral-800);
+    font-size: var(--fs-300);
+  }
+
+  .card__footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .card__rating {
+    display: flex;
+    gap: 0.25em;
+  }
+
+  .card__votes {
+    color: var(--clr-neutral-400);
+  }
+
+  .card__sold-out {
+    color: var(--clr-red);
+  }
+</style>

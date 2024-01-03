@@ -1,0 +1,53 @@
+:root {
+  --clr-neutral-800: #111315;
+  --clr-neutral-600: #1B1D1F;
+  --clr-neutral-400: #6F757C;
+  --clr-neutral-100: #FEF7EE;
+
+  --clr-yellow: #F6C768;
+  --clr-green: #BEE3CC;
+  --clr-red: #ED735D;
+
+  --ff-sans: 'DM Sans', sans-serif;
+  --fs-700: 2rem;
+  --fs-400: 1rem;
+  --fs-300: .875rem;
+  --fs-200: .75rem;
+  --fs-100: .625rem;
+  --fw-regular: 600;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--ff-sans);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: var(--fs-400);
+  font-weight: var(--fw-regular);
+  line-height: 1.5;
+  background-color: var(--clr-neutral-800);
+  color: var(--clr-neutral-100);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+}
+
+h2,
+h3 {
+  margin-top: 0;
+  line-height: 1;
+}

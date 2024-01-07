@@ -1,6 +1,6 @@
 ---
+import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
-import "../styles/global.css";
 
 let collection: Coffee[] = [];
 try {
@@ -13,48 +13,34 @@ try {
 }
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <section class="section wrapper">
-      <div class="hero-wrapper">
-        <h2 class="section__title">Our Collection</h2>
-        <p class="section__text">
-          Introducing our Coffee Collection, a selection of unique coffees from
-          different roast types and origins, expertly roasted in small batches
-          and shipped fresh weekly.
-        </p>
-        <button class="tab" aria-selected="true" onclick="showAll()"
-          >All Products</button
-        >
-        <button class="tab" aria-selected="false" onclick="showAvailable()"
-          >Available Now</button
-        >
-      </div>
-      <ul class="list">
-        {
-          collection.map((coffee) => (
-            <li class="list__item">
-              <Card product={coffee} />
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-  </body>
-</html>
+<Layout>
+  <section class="section wrapper">
+    <div class="hero-wrapper">
+      <img class="hero-image" src="./images/vector.svg" alt="" />
+      <h2 class="section__title">Our Collection</h2>
+      <p class="section__text">
+        Introducing our Coffee Collection, a selection of unique coffees from
+        different roast types and origins, expertly roasted in small batches and
+        shipped fresh weekly.
+      </p>
+      <button class="tab" aria-selected="true" onclick="showAll()"
+        >All Products</button
+      >
+      <button class="tab" aria-selected="false" onclick="showAvailable()"
+        >Available Now</button
+      >
+    </div>
+    <ul class="list">
+      {
+        collection.map((coffee) => (
+          <li class="list__item">
+            <Card product={coffee} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>
 
 <script is:inline>
   const tabs = document.querySelectorAll(".tab");
@@ -94,7 +80,7 @@ try {
 
   @media (min-width: 42rem) {
     .wrapper {
-      --maxWidth: 40rem;
+      --maxWidth: 42rem;
     }
   }
 
@@ -109,6 +95,7 @@ try {
     padding-block: 8em 4em;
     margin-bottom: 4em;
     border-radius: 1em;
+    overflow: hidden;
   }
 
   .hero-wrapper {
@@ -116,6 +103,19 @@ try {
     margin-bottom: 3em;
     max-width: 30ch;
     margin-inline: auto;
+  }
+
+  .hero-wrapper,
+  .section__text,
+  .section__title {
+    position: relative;
+  }
+
+  .hero-image {
+    position: absolute;
+    top: -50%;
+    translate: 0 20%;
+    left: 50%;
   }
 
   .section__title {

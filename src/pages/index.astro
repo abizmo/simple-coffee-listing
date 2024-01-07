@@ -1,130 +1,170 @@
 ---
 import Card from "../components/Card.astro";
-
 import "../styles/global.css";
+
+let collection: Coffee[] = [];
+try {
+  const response = await fetch(
+    "https://raw.githubusercontent.com/devchallenges-io/web-project-ideas/main/front-end-projects/data/simple-coffee-listing-data.json"
+  );
+  if (response.ok) collection = await response.json();
+} catch (err) {
+  console.error(err);
+}
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
-			rel="stylesheet"
-		/>
-	</head>
-	<body>
-		<section class="section wrapper">
-			<div class="hero-wrapper">
-				<h2 class="section__title">Our Collection</h2>
-				<p class="section__text">
-					Introducing our Coffee Collection, a selection of unique coffees from
-					different roast types and origins, expertly roasted in small batches
-					and shipped fresh weekly.
-				</p>
-				<button class="tab" aria-selected="true">All Products</button>
-				<button class="tab" aria-selected="false">Available Now</button>
-			</div>
-			<ul class="list">
-				{
-					Array.from({ length: 6 }).map(() => (
-						<li class="list__item">
-							<Card />
-						</li>
-					))
-				}
-			</ul>
-		</section>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section class="section wrapper">
+      <div class="hero-wrapper">
+        <h2 class="section__title">Our Collection</h2>
+        <p class="section__text">
+          Introducing our Coffee Collection, a selection of unique coffees from
+          different roast types and origins, expertly roasted in small batches
+          and shipped fresh weekly.
+        </p>
+        <button class="tab" aria-selected="true" onclick="showAll()"
+          >All Products</button
+        >
+        <button class="tab" aria-selected="false" onclick="showAvailable()"
+          >Available Now</button
+        >
+      </div>
+      <ul class="list">
+        {
+          collection.map((coffee) => (
+            <li class="list__item">
+              <Card product={coffee} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </body>
 </html>
 
+<script is:inline>
+  const tabs = document.querySelectorAll(".tab");
+  tabs.forEach((tab) =>
+    tab.addEventListener("click", (evt) => {
+      const targetTab = evt.target;
+      tabs.forEach((tab) => {
+        tab.removeAttribute("aria-selected");
+      });
+      targetTab.setAttribute("aria-selected", "true");
+    })
+  );
+
+  const showAll = () => {
+    const soldOuts = document.querySelectorAll("[data-sold-out]");
+    soldOuts.forEach((card) => {
+      card.parentElement.classList.remove("hide");
+    });
+  };
+
+  const showAvailable = () => {
+    console.log("hide");
+    const soldOuts = document.querySelectorAll("[data-sold-out]");
+    soldOuts.forEach((card) => {
+      card.parentElement.classList.add("hide");
+    });
+  };
+</script>
 <style>
-	.wrapper {
-		--maxWidth: 26rem;
-		--padding: 1rem;
+  .wrapper {
+    --maxWidth: 26rem;
+    --padding: 1rem;
 
-		max-width: min(var(--maxWidth), 100% - (var(--padding) * 2));
-		margin-inline: auto;
-	}
+    max-width: min(var(--maxWidth), 100% - (var(--padding) * 2));
+    margin-inline: auto;
+  }
 
-	@media (min-width: 42rem) {
-		.wrapper {
-			--maxWidth: 40rem;
-		}
-	}
+  @media (min-width: 42rem) {
+    .wrapper {
+      --maxWidth: 40rem;
+    }
+  }
 
-	@media (min-width: 70rem) {
-		.wrapper {
-			--maxWidth: 68rem;
-		}
-	}
+  @media (min-width: 70rem) {
+    .wrapper {
+      --maxWidth: 68rem;
+    }
+  }
 
-	.section {
-		background-color: var(--clr-neutral-600);
-		padding-block: 8em 4em;
-		margin-bottom: 4em;
-		border-radius: 1em;
-	}
+  .section {
+    background-color: var(--clr-neutral-600);
+    padding-block: 8em 4em;
+    margin-bottom: 4em;
+    border-radius: 1em;
+  }
 
-	.hero-wrapper {
-		text-align: center;
-		margin-bottom: 3em;
-		max-width: 30ch;
-		margin-inline: auto;
-	}
+  .hero-wrapper {
+    text-align: center;
+    margin-bottom: 3em;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
 
-	.section__title {
-		font-size: var(--fs-700);
-		margin-bottom: 0.5em;
-	}
+  .section__title {
+    font-size: var(--fs-700);
+    margin-bottom: 0.5em;
+  }
 
-	.section__text {
-		color: var(--clr-neutral-400);
-	}
+  .section__text {
+    color: var(--clr-neutral-400);
+  }
 
-	.tab {
-		background-color: transparent;
-		border: 0;
-		border-radius: 0.5em;
-		padding: 0.5em 0.75em;
-		color: var(--clr-neutral-100);
-	}
+  .tab {
+    background-color: transparent;
+    border: 0;
+    border-radius: 0.5em;
+    padding: 0.5em 0.75em;
+    color: var(--clr-neutral-100);
+  }
 
-	.tab + .tab {
-		margin-left: 1em;
-	}
+  .tab + .tab {
+    margin-left: 1em;
+  }
 
-	.tab[aria-selected="true"] {
-		background-color: var(--clr-neutral-400);
-	}
+  .tab[aria-selected="true"] {
+    background-color: var(--clr-neutral-400);
+  }
 
-	.list {
-		--cols: 1;
+  .list {
+    --cols: 1;
 
-		display: grid;
-		gap: 4em 1em;
-		justify-content: center;
-		grid-template-columns: repeat(var(--cols), 1fr);
-		padding: 0;
-		list-style: none;
-		width: max-content;
-		margin-inline: auto;
-	}
+    display: grid;
+    gap: 4em 1em;
+    justify-content: center;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    padding: 0;
+    list-style: none;
+    width: max-content;
+    margin-inline: auto;
+  }
 
-	@media (min-width: 42rem) {
-		.list {
-			--cols: 2;
-		}
-	}
+  @media (min-width: 42rem) {
+    .list {
+      --cols: 2;
+    }
+  }
 
-	@media (min-width: 70rem) {
-		.list {
-			--cols: 3;
-		}
-	}
+  @media (min-width: 70rem) {
+    .list {
+      --cols: 3;
+    }
+  }
 </style>
